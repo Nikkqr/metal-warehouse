@@ -4,6 +4,7 @@ import com.warehouse.DTO.FilterDTO;
 import com.warehouse.DTO.MetalRollDTO;
 import com.warehouse.DTO.RollStatisticsDTO;
 import com.warehouse.entities.MetalRoll;
+import com.warehouse.exceptions.InvalidRollDataException;
 import com.warehouse.exceptions.RollNotFoundException;
 import com.warehouse.repositories.MetalRollRepository;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class MetalRollService {
 
     public MetalRollDTO addMetalRoll(double length, double weight) {
         if (length <= 0 || weight <= 0) {
-            throw new IllegalArgumentException("Length and weight must be positive numbers.");
+            throw new InvalidRollDataException("Length and weight must be positive numbers.");
         }
 
         MetalRoll roll = new MetalRoll(length, weight, LocalDate.now(), null);
@@ -32,12 +33,14 @@ public class MetalRollService {
 
     public MetalRollDTO removeMetalRoll(int id) {
         if (id <= 0) {
-            throw new IllegalArgumentException("Id must be positive numbers.");
+            throw new InvalidRollDataException("Id must be positive numbers.");
         }
 
         MetalRoll roll = repository.findById(id).orElseThrow(() -> new RollNotFoundException("MetalRoll with id " + id + " not found"));
-        repository.delete(roll);
-        return new MetalRollDTO(roll);
+        roll.setDateOfDeletion(LocalDate.now());
+        MetalRoll saved = repository.save(roll);
+
+        return new MetalRollDTO(saved);
     }
 
     public List<MetalRollDTO> getFilteredMetalRolls(FilterDTO filter) {
