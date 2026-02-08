@@ -10,12 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MetalRollRepository extends JpaRepository<MetalRoll, Integer> {
-    List<MetalRoll> findByIdBetween(int from, int to);
-
-    List<MetalRoll> findByLengthBetween(double idFrom, double idTo);
-
-    List<MetalRoll> findByWeightBetween(double idFrom, double idTo);
-
     List<MetalRoll> findByDateAddedBetween(LocalDate addedFrom, LocalDate addedTo);
 
     List<MetalRoll> findByDateOfDeletionBetween(LocalDate removedFrom, LocalDate removedTo);

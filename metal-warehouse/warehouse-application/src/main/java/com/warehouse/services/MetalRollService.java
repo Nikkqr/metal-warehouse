@@ -4,7 +4,7 @@ import com.warehouse.DTO.FilterDTO;
 import com.warehouse.DTO.MetalRollDTO;
 import com.warehouse.DTO.RollStatisticsDTO;
 import com.warehouse.entities.MetalRoll;
-import com.warehouse.exceptions.ResourceNotFoundException;
+import com.warehouse.exceptions.RollNotFoundException;
 import com.warehouse.repositories.MetalRollRepository;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +35,7 @@ public class MetalRollService {
             throw new IllegalArgumentException("Id must be positive numbers.");
         }
 
-        MetalRoll roll = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("MetalRoll with id " + id + " not found"));
+        MetalRoll roll = repository.findById(id).orElseThrow(() -> new RollNotFoundException("MetalRoll with id " + id + " not found"));
         repository.delete(roll);
         return new MetalRollDTO(roll);
     }
