@@ -22,12 +22,12 @@ public class MetalRoll {
     @Column(nullable = false)
     private LocalDate dateAdded;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDate dateOfDeletion;
 
     public MetalRoll() {}
 
-    public MetalRoll(int length, double weight, LocalDate dateAdded, LocalDate dateOfDeletion) {
+    public MetalRoll(double length, double weight, LocalDate dateAdded, LocalDate dateOfDeletion) {
         this.length = length;
         this.weight = weight;
         this.dateAdded = dateAdded;
