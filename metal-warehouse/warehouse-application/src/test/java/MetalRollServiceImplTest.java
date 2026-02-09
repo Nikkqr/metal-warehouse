@@ -5,7 +5,7 @@ import com.warehouse.entities.MetalRoll;
 import com.warehouse.exceptions.InvalidRollDataException;
 import com.warehouse.exceptions.RollNotFoundException;
 import com.warehouse.repositories.MetalRollRepository;
-import com.warehouse.services.MetalRollService;
+import com.warehouse.services.MetalRollServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,25 +23,25 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class MetalRollServiceTest {
+public class MetalRollServiceImplTest {
 
     @Mock
     private MetalRollRepository repository;
 
     @InjectMocks
-    private MetalRollService service;
+    private MetalRollServiceImpl service;
 
     @Test
     void shouldAddRoll() {
-        when(repository.save(any(MetalRoll.class))).thenAnswer(invocation -> {
-            MetalRoll r = invocation.getArgument(0);
-            r.setId(123);
+        when(repository.save(any(MetalRoll.class))).thenAnswer(inv -> {
+            MetalRoll r = inv.getArgument(0);
+            r.setId(12);
             return r;
         });
 
         MetalRollDTO result = service.addMetalRoll(10.0, 2.0);
 
-        assertThat(result.getId()).isEqualTo(123);
+        assertThat(result.getId()).isEqualTo(12);
         assertThat(result.getLength()).isEqualTo(10.0);
     }
 
@@ -58,7 +58,7 @@ public class MetalRollServiceTest {
         existing.setId(42);
         existing.setLength(10.0);
         existing.setWeight(2.0);
-        existing.setDateAdded(LocalDate.of(2025, 1, 1));
+        existing.setDateAdded(LocalDate.of(2026, 1, 1));
         existing.setDateOfDeletion(null);
 
         when(repository.findById(42)).thenReturn(Optional.of(existing));
@@ -78,11 +78,11 @@ public class MetalRollServiceTest {
 
     @Test
     void shouldThrowWhenRollNotFound() {
-        when(repository.findById(999)).thenReturn(Optional.empty());
+        when(repository.findById(777)).thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> service.removeMetalRoll(999))
+        assertThatThrownBy(() -> service.removeMetalRoll(777))
                 .isInstanceOf(RollNotFoundException.class)
-                .hasMessage("MetalRoll with id 999 not found");
+                .hasMessage("MetalRoll with id 777 not found");
     }
 
     @Test
@@ -118,18 +118,18 @@ public class MetalRollServiceTest {
         r1.setId(1);
         r1.setLength(10.0);
         r1.setWeight(2.0);
-        r1.setDateAdded(LocalDate.of(2025, 1, 5));
+        r1.setDateAdded(LocalDate.of(2026, 1, 5));
         r1.setDateOfDeletion(null);
 
         MetalRoll r2 = new MetalRoll();
         r2.setId(2);
         r2.setLength(15.0);
         r2.setWeight(3.0);
-        r2.setDateAdded(LocalDate.of(2025, 1, 10));
-        r2.setDateOfDeletion(LocalDate.of(2025, 1, 20));
+        r2.setDateAdded(LocalDate.of(2026, 1, 10));
+        r2.setDateOfDeletion(LocalDate.of(2026, 1, 20));
 
-        LocalDate start = LocalDate.of(2025, 1, 1);
-        LocalDate end = LocalDate.of(2025, 1, 31);
+        LocalDate start = LocalDate.of(2026, 1, 1);
+        LocalDate end = LocalDate.of(2026, 1, 31);
 
         when(repository.findActiveInPeriod(start, end)).thenReturn(List.of(r1, r2));
         when(repository.findByDateAddedBetween(start, end)).thenReturn(List.of(r1, r2));
@@ -140,7 +140,7 @@ public class MetalRollServiceTest {
         assertThat(stats.getAddedCount()).isEqualTo(2);
         assertThat(stats.getRemovedCount()).isEqualTo(1);
         assertThat(stats.getAvgLength()).isEqualTo(12.5);
-        assertThat(stats.getMaxIntervalDays()).isEqualTo(10); // 20 - 10
+        assertThat(stats.getMaxIntervalDays()).isEqualTo(10);
     }
 
 

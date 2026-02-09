@@ -6,25 +6,25 @@ import java.time.LocalDate;
 
 @Data
 public class FilterDTO {
-    private Integer idFrom;
+    private Integer idFrom = null;
 
-    private Integer idTo;
+    private Integer idTo = null;
 
-    private Double weightFrom;
+    private Double weightFrom = null;
 
-    private Double weightTo;
+    private Double weightTo = null;
 
-    private Double lengthFrom;
+    private Double lengthFrom = null;
 
-    private Double lengthTo;
+    private Double lengthTo = null;
 
-    private LocalDate addedFrom;
+    private LocalDate addedFrom = null;
 
-    private LocalDate addedTo;
+    private LocalDate addedTo = null;
 
-    private LocalDate removedFrom;
+    private LocalDate removedFrom = null;
 
-    private LocalDate removedTo;
+    private LocalDate removedTo = null;
 
     public boolean hasIdFilter() {
         return idFrom != null && idTo != null;

@@ -2,6 +2,8 @@ package com.warehouse.DTO;
 
 import lombok.Data;
 
+import java.time.LocalDate;
+
 @Data
 public class RollStatisticsDTO {
     private long addedCount;
@@ -25,4 +27,12 @@ public class RollStatisticsDTO {
     private long maxIntervalDays;
 
     private long minIntervalDays;
+
+    private LocalDate dayWithMinCount;
+
+    private LocalDate dayWithMaxCount;
+
+    private LocalDate dayWithMinWeight;
+
+    private LocalDate dayWithMaxWeight;
 }

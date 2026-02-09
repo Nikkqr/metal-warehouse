@@ -1,9 +1,9 @@
 server:
-  port: 8081
+  port: 8083
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:54321/postgres
+    url: jdbc:postgresql://localhost:54321/metalWh
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver

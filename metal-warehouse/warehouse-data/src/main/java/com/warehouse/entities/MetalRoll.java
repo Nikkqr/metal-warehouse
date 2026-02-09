@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 @Data
 @Entity
+@Table(name = "metalroll")
 public class MetalRoll {
 
     @Id
