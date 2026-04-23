@@ -3,7 +3,10 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:54321/metalWh
+    url: jdbc:postgresql://db:5432/metalWh
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
